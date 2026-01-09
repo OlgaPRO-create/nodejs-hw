@@ -29,7 +29,7 @@ app.use(
 
 //  Повертає всі нотатки
 app.get('/notes', (req, res) => {
-  res.status(200).json([{ message: "Retrieved all notes" }]);
+  res.status(200).json({ message: "Retrieved all notes" });
 });
 
 // Повертає одну нотатку за noteId
