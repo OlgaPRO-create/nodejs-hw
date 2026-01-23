@@ -4,10 +4,12 @@ import createHttpError from 'http-errors';
 export const getAllNotes = async (req, res) => {
   const { page = 1, perPage = 10, tag, search } = req.query;
 
-  const skip = (page - 1) * perPage;
+  const pageNumber = Number(page);
+  const perPageNumber = Number(perPage);
+  const skip = (pageNumber - 1) * perPageNumber;
 
   const notesQuery = Note.find();
-  
+
   // Будуємо фільтр
   if (tag) {
     notesQuery.where('tag').equals(tag);
@@ -18,16 +20,16 @@ export const getAllNotes = async (req, res) => {
     });
   }
 
-  const [totalItems, notes] = await Promise.all([
+  const [totalNotes, notes] = await Promise.all([
     notesQuery.clone().countDocuments(),
-    notesQuery.skip(skip).limit(perPage),
+    notesQuery.skip(skip).limit(perPageNumber),
   ]);
-  const totalPages = Math.ceil(totalItems / perPage);
+  const totalPages = Math.ceil(totalNotes / perPageNumber);
 
   res.status(200).json({
-    page,
-    perPage,
-    totalItems,
+    page: pageNumber,
+    perPage: perPageNumber,
+    totalNotes,
     totalPages,
     notes,
   });

@@ -24,8 +24,18 @@ const noteSchema = new Schema(
   },
   {
     timestamps: true,
-    versionKey: false,
+    // versionKey: false,
   }
+);
+
+noteSchema.index(
+  {
+    title: 'text',
+    content: 'text',
+  },
+  {
+    name: 'NoteTextIndex',
+  },
 );
 
 export const Note = model('Note', noteSchema);
