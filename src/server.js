@@ -8,6 +8,10 @@ import { errorHandler } from './middleware/errorHandler.js';
 import notesRoutes from './routes/notesRoutes.js';
 import helmet from 'helmet';
 import { errors } from 'celebrate';
+import authRoutes from './routes/authRoutes.js';
+import cookieParser from 'cookie-parser';
+
+
 
 
 const app = express();
@@ -16,10 +20,13 @@ const PORT = process.env.PORT ?? 3000;
 
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 app.use(helmet());
 app.use(logger);
-
+app.use(authRoutes);
 app.use(notesRoutes);
+
+
 
 app.use(errors());
 
