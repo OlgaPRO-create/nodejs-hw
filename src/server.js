@@ -12,8 +12,6 @@ import authRoutes from './routes/authRoutes.js';
 import cookieParser from 'cookie-parser';
 
 
-
-
 const app = express();
 const PORT = process.env.PORT ?? 3000;
 
@@ -25,9 +23,6 @@ app.use(helmet());
 app.use(logger);
 app.use(authRoutes);
 app.use(notesRoutes);
-
-
-
 app.use(errors());
 
 
